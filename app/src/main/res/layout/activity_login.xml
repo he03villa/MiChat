@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.villa.michat.Login">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hemer"
+            android:textSize="26pt"
+            android:layout_gravity="center"
+            android:id="@+id/titulo"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txtuser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Usuario"
+            android:drawableLeft="@drawable/ic_action_user"/>
+
+        <EditText
+            android:id="@+id/txtpass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:drawableLeft="@drawable/ic_action_lock_closed"
+            android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/btnIngresar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Ingresar"
+            android:theme="@style/MyButton"
+            android:textColor="@color/White"
+            android:drawableLeft="@drawable/ic_action_key"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnregistrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:hint="No tengo una cueta"
+        android:background="@android:color/transparent"/>
+
+</RelativeLayout>

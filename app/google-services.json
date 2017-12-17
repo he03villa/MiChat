@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "499018147869",
+    "firebase_url": "https://mi-chat-d4704.firebaseio.com",
+    "project_id": "mi-chat-d4704",
+    "storage_bucket": "mi-chat-d4704.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499018147869:android:bbea96374d87e85f",
+        "android_client_info": {
+          "package_name": "com.example.villa.michat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499018147869-2ugat3iq7ihi0qukr279c8av600vremn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEc3yG5V-m16U8g9mh1Xpe7FefrzI3tk4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
