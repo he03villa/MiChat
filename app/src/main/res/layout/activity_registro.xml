@@ -27,7 +27,8 @@
         android:layout_height="wrap_content"
         android:hint="Contraseña"
         android:textColorHint="@android:color/black"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:inputType="textPassword"/>
     <EditText
         android:id="@+id/txtnombre"
         android:layout_width="match_parent"
