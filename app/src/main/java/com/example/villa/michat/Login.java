@@ -34,11 +34,11 @@ public class Login extends AppCompatActivity {
     private RequestQueue mRequest;
     private VolleyRP volleyRP;
 
-    private static final String url = "http://he03villa.000webhostapp.com/chat/Controlador/usuario/Login.php?user=";
-    private static final String IP_TOKEN = "http://he03villa.000webhostapp.com/chat/Controlador/token/InsertarandActualizar.php";
-
     private String USER = "";
     private String PASS = "";
+
+    private static final String url = "http://he03villa.000webhostapp.com/chat/Controlador/usuario/Login.php?user=";
+    private static final String IP_TOKEN = "http://he03villa.000webhostapp.com/chat/Controlador/token/InsertarandActualizar.php";
 
     private boolean isActivateRadioButton;
     private static final String STRING_PREFEREN ="villa.michat.Mesajes.Mensajeri";
