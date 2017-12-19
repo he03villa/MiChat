@@ -38,6 +38,15 @@
             android:drawableLeft="@drawable/ic_action_lock_closed"
             android:inputType="textPassword"/>
 
+        <RadioButton
+            android:id="@+id/RDsecion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="No cerrar secion"
+            android:textColorHint="@android:color/black"
+            android:paddingRight="25sp"
+            android:paddingLeft="25sp" />
+
         <Button
             android:id="@+id/btnIngresar"
             android:layout_width="wrap_content"

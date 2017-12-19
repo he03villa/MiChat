@@ -1,11 +1,13 @@
 package com.example.villa.michat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -27,6 +29,7 @@ public class Login extends AppCompatActivity {
     private EditText pass;
     private Button ingresar;
     private Button registro;
+    private RadioButton secion;
 
     private RequestQueue mRequest;
     private VolleyRP volleyRP;
@@ -36,10 +39,21 @@ public class Login extends AppCompatActivity {
 
     private String USER = "";
     private String PASS = "";
+
+    private boolean isActivateRadioButton;
+    private static final String STRING_PREFEREN ="villa.michat.Mesajes.Mensajeri";
+    private static final String  STRING_ESTADO = "estado.button.secion";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if(getEstado()){
+            Intent intent = new Intent(Login.this,Mensajeria.class);
+            startActivity(intent);
+            finish();
+        }
 
         volleyRP = VolleyRP.getInstance(this);
         mRequest = volleyRP.getRequestQueue();
@@ -48,6 +62,17 @@ public class Login extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.txtpass);
         ingresar = (Button) findViewById(R.id.btnIngresar);
         registro = (Button) findViewById(R.id.btnregistrar);
+        secion = (RadioButton) findViewById(R.id.RDsecion);
+
+        isActivateRadioButton = secion.isChecked();
+
+        secion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isActivateRadioButton) secion.setChecked(false);
+                isActivateRadioButton = secion.isChecked();
+            }
+        });
 
         ingresar.setOnClickListener(new View.OnClickListener() {
 
@@ -57,7 +82,6 @@ public class Login extends AppCompatActivity {
             }
         });
         registro.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this,Registro.class);
@@ -65,6 +89,16 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void guardarEstado(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFEREN,MODE_PRIVATE);
+        preferences.edit().putBoolean(STRING_ESTADO,secion.isChecked()).apply();
+    }
+
+    public boolean getEstado(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFEREN,MODE_PRIVATE);
+        return preferences.getBoolean(STRING_ESTADO,false);
     }
 
     public void verificar(String user,String pass){
@@ -124,12 +158,14 @@ public class Login extends AppCompatActivity {
         JsonObjectRequest solicitud = new JsonObjectRequest(Request.Method.POST,IP_TOKEN, new JSONObject(hashMap), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                guardarEstado();
                 try {
                     Toast.makeText(Login.this,response.getString("resultado"),Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {}
                 Intent intent = new Intent(Login.this,Mensajeria.class);
                 intent.putExtra("key_emisor",USER);
                 startActivity(intent);
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override
