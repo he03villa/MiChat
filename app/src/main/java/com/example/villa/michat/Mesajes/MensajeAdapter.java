@@ -59,7 +59,7 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.MemsajeV
             fl.gravity = Gravity.RIGHT;
             holder.TvMensaje.setGravity(Gravity.RIGHT);
         }else{
-            if(mensajeDeTextos.get(position).getTipoMensaje() == 2){//Reseptor
+            if(mensajeDeTextos.get(position).getTipoMensaje() == 2){//Receptor
                 holder.mensajeBG.setBackgroundResource(R.drawable.out_message_bg);
                 rl.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,0);
                 rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);

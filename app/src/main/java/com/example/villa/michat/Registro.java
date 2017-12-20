@@ -2,6 +2,7 @@ package com.example.villa.michat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -96,15 +97,17 @@ public class Registro extends AppCompatActivity {
                     String email = validarCadena(getStringET(correo));
                     String phone = validarCadena(getStringET(telefono));
                     Insertar(usua,pass,name,last,fecha,email,phone,genero);
-                }else Toast.makeText(Registro.this," El Genero es ",Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(Registro.this," Los campos estan vacios",Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    @NonNull
     private String getStringET(EditText e){
         return e.getText().toString();
     }
 
+    @NonNull
     private String validarCadena(String cadena){
         for (int i=0;i<cadena.length();i++) if(!(""+cadena.charAt(i)).equalsIgnoreCase(" "))return  cadena.substring(i,cadena.length());
         return "";

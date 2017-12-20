@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.villa.michat.Login;
+import com.example.villa.michat.Preferences;
 import com.example.villa.michat.R;
 import com.example.villa.michat.Services.FireBaseId;
 import com.example.villa.michat.VolleyRP;
@@ -53,6 +55,7 @@ public class Mensajeria extends AppCompatActivity{
     private EditText txtreceptor;
     private List<MensajeDeTexto> mensajeDeTextos;
     private MensajeAdapter adapter;
+    private Button cerrar;
 
     private RequestQueue mRequest;
     private VolleyRP volleyRP;
@@ -72,16 +75,14 @@ public class Mensajeria extends AppCompatActivity{
         volleyRP = VolleyRP.getInstance(this);
         mRequest = volleyRP.getRequestQueue();
 
-        Intent extra = getIntent();
-        Bundle bundle = extra.getExtras();
-        if(bundle!=null){
-            EMISOR = bundle.getString("key_emisor");
-        }
+        EMISOR = Preferences.getString(this,Preferences.PREFERENCE_USUARIO);
+        Toast.makeText(this,EMISOR,Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         btnenviar = (Button) findViewById(R.id.btnenviar);
         txtmensaje = (EditText) findViewById(R.id.txtmensaje);
         txtreceptor = (EditText) findViewById(R.id.txtreceptor);
+        cerrar = (Button) findViewById(R.id.btncerrar);
 
         rv = (RecyclerView) findViewById(R.id.rvMensaje);
         LinearLayoutManager lm = new LinearLayoutManager(this);
@@ -123,11 +124,22 @@ public class Mensajeria extends AppCompatActivity{
                 CreateMendaje(mensaje,hora,2);
             }
         };
+
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Preferences.saveBoolean(Mensajeria.this,false,Preferences.STRING_ESTADO);
+                Intent intent = new Intent(Mensajeria.this,Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     //" " no va a enviar
     //"    hola"=>"hola"
     //"    hola como estas" => "hola como estas"
+    @NonNull
     private String validarCadena(String cadena){
         for (int i=0;i<cadena.length();i++) if(!(""+cadena.charAt(i)).equalsIgnoreCase(" "))return  cadena.substring(i,cadena.length());
         return "";

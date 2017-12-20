@@ -1,5 +1,6 @@
 package com.example.villa.michat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -41,15 +42,13 @@ public class Login extends AppCompatActivity {
     private static final String IP_TOKEN = "http://he03villa.000webhostapp.com/chat/Controlador/token/InsertarandActualizar.php";
 
     private boolean isActivateRadioButton;
-    private static final String STRING_PREFEREN ="villa.michat.Mesajes.Mensajeri";
-    private static final String  STRING_ESTADO = "estado.button.secion";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if(getEstado()){
+        if(Preferences.getBoolean(this,Preferences.STRING_ESTADO)){
             Intent intent = new Intent(Login.this,Mensajeria.class);
             startActivity(intent);
             finish();
@@ -89,16 +88,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-    }
-
-    public void guardarEstado(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFEREN,MODE_PRIVATE);
-        preferences.edit().putBoolean(STRING_ESTADO,secion.isChecked()).apply();
-    }
-
-    public boolean getEstado(){
-        SharedPreferences preferences = getSharedPreferences(STRING_PREFEREN,MODE_PRIVATE);
-        return preferences.getBoolean(STRING_ESTADO,false);
     }
 
     public void verificar(String user,String pass){
@@ -158,12 +147,12 @@ public class Login extends AppCompatActivity {
         JsonObjectRequest solicitud = new JsonObjectRequest(Request.Method.POST,IP_TOKEN, new JSONObject(hashMap), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                guardarEstado();
+                Preferences.saveBoolean(Login.this,secion.isChecked(),Preferences.STRING_ESTADO);
+                Preferences.saveString(Login.this,USER,Preferences.PREFERENCE_USUARIO);
                 try {
                     Toast.makeText(Login.this,response.getString("resultado"),Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {}
                 Intent intent = new Intent(Login.this,Mensajeria.class);
-                intent.putExtra("key_emisor",USER);
                 startActivity(intent);
                 finish();
             }
