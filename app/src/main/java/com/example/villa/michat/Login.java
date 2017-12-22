@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.villa.michat.Amigo.Amigos;
 import com.example.villa.michat.Mesajes.Mensajeria;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -48,11 +49,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if(Preferences.getBoolean(this,Preferences.STRING_ESTADO)){
-            Intent intent = new Intent(Login.this,Mensajeria.class);
-            startActivity(intent);
-            finish();
-        }
+        if(Preferences.getBoolean(this,Preferences.STRING_ESTADO))iniciarActividadSiguiente();
 
         volleyRP = VolleyRP.getInstance(this);
         mRequest = volleyRP.getRequestQueue();
@@ -152,9 +149,7 @@ public class Login extends AppCompatActivity {
                 try {
                     Toast.makeText(Login.this,response.getString("resultado"),Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {}
-                Intent intent = new Intent(Login.this,Mensajeria.class);
-                startActivity(intent);
-                finish();
+                iniciarActividadSiguiente();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -163,5 +158,11 @@ public class Login extends AppCompatActivity {
             }
         });
         VolleyRP.addToQueue(solicitud,mRequest,this,volleyRP);
+    }
+
+    public void iniciarActividadSiguiente(){
+        Intent intent = new Intent(Login.this,Amigos.class);
+        startActivity(intent);
+        finish();
     }
 }

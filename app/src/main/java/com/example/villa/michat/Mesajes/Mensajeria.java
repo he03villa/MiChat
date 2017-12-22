@@ -67,7 +67,7 @@ public class Mensajeria extends AppCompatActivity{
     private static final String IP_MENSAJE = "http://he03villa.000webhostapp.com/chat/Controlador/Enviar_Mensajes.php";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mensajeria);
         mensajeDeTextos = new ArrayList<>();
@@ -86,7 +86,7 @@ public class Mensajeria extends AppCompatActivity{
 
         rv = (RecyclerView) findViewById(R.id.rvMensaje);
         LinearLayoutManager lm = new LinearLayoutManager(this);
-        lm.setStackFromEnd(true);
+        lm.setStackFromEnd(true);//Mensajeria exclusivamente
         rv.setLayoutManager(lm);
 
         adapter = new MensajeAdapter(mensajeDeTextos,this);
