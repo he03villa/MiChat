@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +46,7 @@ public class Amigos extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amigo);
         setTitle("Amigos");
+        atributolista = new ArrayList<>();
 
         volleyRP = VolleyRP.getInstance(this);
         mRequest = volleyRP.getRequestQueue();
@@ -54,7 +56,7 @@ public class Amigos extends AppCompatActivity{
         rv.setLayoutManager(lm);
 
         adapter = new AmigosAdapter(atributolista,this);
-        //rv.setAdapter(adapter);
+        rv.setAdapter(adapter);
         SolicitudJSON();
     }
 
@@ -76,12 +78,13 @@ public class Amigos extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void agrgarAmigo(int fotoDePerfil, String nombre, String mensaje, String hora){
+    public void agrgarAmigo(int fotoDePerfil, String nombre, String mensaje, String hora,String id){
         AmigosAtributos atributos = new AmigosAtributos();
         atributos.setFotoDePerfil(fotoDePerfil);
         atributos.setMensaje(mensaje);
         atributos.setNombre(nombre);
         atributos.setHora(hora);
+        atributos.setId(id);
         atributolista.add(atributos);
         adapter.notifyDataSetChanged();
     }
@@ -96,7 +99,7 @@ public class Amigos extends AppCompatActivity{
                     for(int i = 0; i<array.length();i++){
                         JSONObject object = array.getJSONObject(i);
                         Toast.makeText(Amigos.this,"El usuario "+i+" es "+object.getString("id"),Toast.LENGTH_LONG).show();
-                        agrgarAmigo(R.drawable.ic_account_circle,object.getString("nombre"),"mensaje "+i,"00:00");
+                        agrgarAmigo(R.drawable.ic_account_circle,object.getString("nombre"),"mensaje "+i,"00:00",object.getString("id"));
                     }
                 } catch (JSONException e) {
                     Toast.makeText(Amigos.this,"Error en la descompresion del json",Toast.LENGTH_LONG).show();

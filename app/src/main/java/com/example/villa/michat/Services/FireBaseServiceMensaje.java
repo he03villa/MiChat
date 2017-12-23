@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.villa.michat.Mesajes.Mensajeria;
+import com.example.villa.michat.Preferences;
 import com.example.villa.michat.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -29,14 +30,22 @@ public class FireBaseServiceMensaje extends FirebaseMessagingService {
         String hora = remoteMessage.getData().get("hora");
         String cabezera = remoteMessage.getData().get("cabezera");
         String cuerpo = remoteMessage.getData().get("cuerpo");
-        Mensaje(mensaje,hora);
-        showNotificacion(cabezera,cuerpo);
+        String receptor = remoteMessage.getData().get("receptor");
+        String emisorPHP = remoteMessage.getData().get("emisor");
+        String emisor = Preferences.getString(this,Preferences.PREFERENCE_USUARIO);
+        if(emisor.equals(receptor)){
+            Mensaje(mensaje,hora,emisorPHP);
+            showNotificacion(cabezera,cuerpo);
+        }
     }
 
-    private void Mensaje(String mensaje,String hora){
+    public boolean equals(Object obj){ return (getApplication().getClass() == obj);}
+
+    private void Mensaje(String mensaje,String hora,String emisor){
         Intent intent = new Intent(Mensajeria.MENSAJE);
         intent.putExtra("key_mensaje",mensaje);
         intent.putExtra("key_hora",hora);
+        intent.putExtra("key_emisor_PHP",emisor);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 

@@ -52,7 +52,6 @@ public class Mensajeria extends AppCompatActivity{
     private RecyclerView rv;
     private Button btnenviar;
     private EditText txtmensaje;
-    private EditText txtreceptor;
     private List<MensajeDeTexto> mensajeDeTextos;
     private MensajeAdapter adapter;
 
@@ -75,12 +74,16 @@ public class Mensajeria extends AppCompatActivity{
         mRequest = volleyRP.getRequestQueue();
 
         EMISOR = Preferences.getString(this,Preferences.PREFERENCE_USUARIO);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null){
+            RECEPTOR = bundle.getString("hey_receptor");
+        }
         Toast.makeText(this,EMISOR,Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         btnenviar = (Button) findViewById(R.id.btnenviar);
         txtmensaje = (EditText) findViewById(R.id.txtmensaje);
-        txtreceptor = (EditText) findViewById(R.id.txtreceptor);
 
         rv = (RecyclerView) findViewById(R.id.rvMensaje);
         LinearLayoutManager lm = new LinearLayoutManager(this);
@@ -93,8 +96,7 @@ public class Mensajeria extends AppCompatActivity{
         btnenviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mensaje = validarCadena(txtmensaje.getText().toString());
-                RECEPTOR = txtreceptor.getText().toString();
+                String mensaje =txtmensaje.getText().toString().trim();//   hola
                 if(!mensaje.isEmpty() && !RECEPTOR.isEmpty()){
                     MENSAJE_ENVIAR=mensaje;
                     MandarMendaje();
@@ -119,18 +121,10 @@ public class Mensajeria extends AppCompatActivity{
             public void onReceive(Context context, Intent intent) {
                 String mensaje = intent.getStringExtra("key_mensaje");
                 String hora = intent.getStringExtra("key_hora");
-                CreateMendaje(mensaje,hora,2);
+                String emisor = intent.getStringExtra("key_emisor_PHP");
+                if(emisor.equals(RECEPTOR)) CreateMendaje(mensaje,hora,2);
             }
         };
-    }
-
-    //" " no va a enviar
-    //"    hola"=>"hola"
-    //"    hola como estas" => "hola como estas"
-    @NonNull
-    private String validarCadena(String cadena){
-        for (int i=0;i<cadena.length();i++) if(!(""+cadena.charAt(i)).equalsIgnoreCase(" "))return  cadena.substring(i,cadena.length());
-        return "";
     }
 
     public void MandarMendaje(){
