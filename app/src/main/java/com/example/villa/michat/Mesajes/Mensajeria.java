@@ -55,7 +55,6 @@ public class Mensajeria extends AppCompatActivity{
     private EditText txtreceptor;
     private List<MensajeDeTexto> mensajeDeTextos;
     private MensajeAdapter adapter;
-    private Button cerrar;
 
     private RequestQueue mRequest;
     private VolleyRP volleyRP;
@@ -82,7 +81,6 @@ public class Mensajeria extends AppCompatActivity{
         btnenviar = (Button) findViewById(R.id.btnenviar);
         txtmensaje = (EditText) findViewById(R.id.txtmensaje);
         txtreceptor = (EditText) findViewById(R.id.txtreceptor);
-        cerrar = (Button) findViewById(R.id.btncerrar);
 
         rv = (RecyclerView) findViewById(R.id.rvMensaje);
         LinearLayoutManager lm = new LinearLayoutManager(this);
@@ -124,16 +122,6 @@ public class Mensajeria extends AppCompatActivity{
                 CreateMendaje(mensaje,hora,2);
             }
         };
-
-        cerrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Preferences.saveBoolean(Mensajeria.this,false,Preferences.STRING_ESTADO);
-                Intent intent = new Intent(Mensajeria.this,Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     //" " no va a enviar
@@ -187,15 +175,6 @@ public class Mensajeria extends AppCompatActivity{
         LocalBroadcastManager.getInstance(this).unregisterReceiver(bR);
     }
 
-    /**
-     * Dispatch onResume() to fragments.  Note that for better inter-operation
-     * with older versions of the platform, at the point of this call the
-     * fragments attached to the activity are <em>not</em> resumed.  This means
-     * that in some cases the previous state may still be saved, not allowing
-     * fragment transactions that modify the state.  To correctly interact
-     * with fragments in their proper state, you should instead override
-     * {@link #onResumeFragments()}.
-     */
     @Override
     protected void onResume() {
         super.onResume();
