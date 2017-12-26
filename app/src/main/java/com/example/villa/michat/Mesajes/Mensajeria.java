@@ -79,7 +79,6 @@ public class Mensajeria extends AppCompatActivity{
         if (bundle != null){
             RECEPTOR = bundle.getString("hey_receptor");
         }
-        Toast.makeText(this,EMISOR,Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         btnenviar = (Button) findViewById(R.id.btnenviar);
@@ -121,8 +120,9 @@ public class Mensajeria extends AppCompatActivity{
             public void onReceive(Context context, Intent intent) {
                 String mensaje = intent.getStringExtra("key_mensaje");
                 String hora = intent.getStringExtra("key_hora");
+                String horaParametro[] = hora.split("\\,");
                 String emisor = intent.getStringExtra("key_emisor_PHP");
-                if(emisor.equals(RECEPTOR)) CreateMendaje(mensaje,hora,2);
+                if(emisor.equals(RECEPTOR)) CreateMendaje(mensaje,horaParametro[0],2);
             }
         };
     }

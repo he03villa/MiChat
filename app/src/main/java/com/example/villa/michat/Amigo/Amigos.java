@@ -95,11 +95,18 @@ public class Amigos extends AppCompatActivity{
             public void onResponse(JSONObject response) {
                 try {
                     String datos = response.getString("resultado");
+                    String token = response.getString("token");
                     JSONArray array = new JSONArray(datos);
+                    JSONArray arrayToken = new JSONArray(token);
+                    String nuestroUsuario = Preferences.getString(Amigos.this,Preferences.PREFERENCE_USUARIO);
                     for(int i = 0; i<array.length();i++){
                         JSONObject object = array.getJSONObject(i);
-                        Toast.makeText(Amigos.this,"El usuario "+i+" es "+object.getString("id"),Toast.LENGTH_LONG).show();
-                        agrgarAmigo(R.drawable.ic_account_circle,object.getString("nombre"),"mensaje "+i,"00:00",object.getString("id"));
+                        if(!nuestroUsuario.equals(object.getString("id"))){
+                            for (int k=0;k<arrayToken.length();k++){
+                                JSONObject objectToken = arrayToken.getJSONObject(k);
+                                if(object.getString("id").equals(objectToken.getString("id"))) agrgarAmigo(R.drawable.ic_account_circle,object.getString("nombre"),"mensaje "+i,"00:00",object.getString("id"));
+                            }
+                        }
                     }
                 } catch (JSONException e) {
                     Toast.makeText(Amigos.this,"Error en la descompresion del json",Toast.LENGTH_LONG).show();
