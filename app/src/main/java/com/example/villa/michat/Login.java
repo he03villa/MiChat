@@ -1,8 +1,6 @@
 package com.example.villa.michat;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,8 +14,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.villa.michat.Amigo.Amigos;
-import com.example.villa.michat.Mesajes.Mensajeria;
+import com.example.villa.michat.ActividadDeUsuarios.ActivityUsuarios;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
@@ -161,7 +158,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void iniciarActividadSiguiente(){
-        Intent intent = new Intent(Login.this,Amigos.class);
+        Intent intent = new Intent(Login.this,ActivityUsuarios.class);
         startActivity(intent);
         finish();
     }

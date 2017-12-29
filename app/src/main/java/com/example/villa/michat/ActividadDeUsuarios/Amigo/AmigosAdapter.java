@@ -1,25 +1,19 @@
-package com.example.villa.michat.Amigo;
+package com.example.villa.michat.ActividadDeUsuarios.Amigo;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.villa.michat.Mesajes.Mensajeria;
 import com.example.villa.michat.R;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Villa on 19/12/2017.
@@ -38,7 +32,7 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.HolderAmig
     @Override
     public HolderAmigos onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_amigos,parent,false);
-        return new AmigosAdapter.HolderAmigos(v);
+        return new HolderAmigos(v);
     }
 
     @Override

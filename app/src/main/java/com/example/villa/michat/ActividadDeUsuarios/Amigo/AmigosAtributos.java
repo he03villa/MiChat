@@ -1,4 +1,4 @@
-package com.example.villa.michat.Amigo;
+package com.example.villa.michat.ActividadDeUsuarios.Amigo;
 
 /**
  * Created by Villa on 19/12/2017.

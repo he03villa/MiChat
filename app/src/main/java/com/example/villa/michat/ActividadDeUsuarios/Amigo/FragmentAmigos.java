@@ -1,20 +1,19 @@
-package com.example.villa.michat.Amigo;
+package com.example.villa.michat.ActividadDeUsuarios.Amigo;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.villa.michat.Login;
-import com.example.villa.michat.Mesajes.Mensajeria;
 import com.example.villa.michat.Preferences;
 import com.example.villa.michat.R;
 import com.example.villa.michat.VolleyRP;
@@ -30,7 +29,7 @@ import java.util.List;
  * Created by Villa on 19/12/2017.
  */
 
-public class Amigos extends AppCompatActivity{
+public class FragmentAmigos extends android.support.v4.app.Fragment{
 
     private RecyclerView rv;
     private List<AmigosAtributos> atributolista;
@@ -42,41 +41,23 @@ public class Amigos extends AppCompatActivity{
     private static final String URL = "http://he03villa.000webhostapp.com/chat/Controlador/Amigos/Lista.php";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amigo);
-        setTitle("Amigos");
-        atributolista = new ArrayList<>();
-
-        volleyRP = VolleyRP.getInstance(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_amigo,container,false);
+        volleyRP = VolleyRP.getInstance(getContext());
         mRequest = volleyRP.getRequestQueue();
 
-        rv = (RecyclerView)findViewById(R.id.rvAmigos);
-        LinearLayoutManager lm = new LinearLayoutManager(this);
+        atributolista = new ArrayList<>();
+
+        rv = (RecyclerView)v.findViewById(R.id.rvAmigos);
+        LinearLayoutManager lm = new LinearLayoutManager(getContext());
         rv.setLayoutManager(lm);
 
-        adapter = new AmigosAdapter(atributolista,this);
+        adapter = new AmigosAdapter(atributolista,getContext());
         rv.setAdapter(adapter);
         SolicitudJSON();
+        return v;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_amigos,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.CerrarSesionMenu){
-            Preferences.saveBoolean(Amigos.this,false,Preferences.STRING_ESTADO);
-            Intent intent = new Intent(Amigos.this,Login.class);
-            startActivity(intent);
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void agrgarAmigo(int fotoDePerfil, String nombre, String mensaje, String hora,String id){
         AmigosAtributos atributos = new AmigosAtributos();
@@ -91,6 +72,7 @@ public class Amigos extends AppCompatActivity{
 
     public void SolicitudJSON(){
         JsonObjectRequest solicitud = new JsonObjectRequest(URL, null, new Response.Listener<JSONObject>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -98,7 +80,7 @@ public class Amigos extends AppCompatActivity{
                     String token = response.getString("token");
                     JSONArray array = new JSONArray(datos);
                     JSONArray arrayToken = new JSONArray(token);
-                    String nuestroUsuario = Preferences.getString(Amigos.this,Preferences.PREFERENCE_USUARIO);
+                    String nuestroUsuario = Preferences.getString(getContext(),Preferences.PREFERENCE_USUARIO);
                     for(int i = 0; i<array.length();i++){
                         JSONObject object = array.getJSONObject(i);
                         if(!nuestroUsuario.equals(object.getString("id"))){
@@ -109,15 +91,16 @@ public class Amigos extends AppCompatActivity{
                         }
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(Amigos.this,"Error en la descompresion del json",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Error en la descompresion del json",Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Amigos.this,"Error en la conexion",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Error en la conexion",Toast.LENGTH_LONG).show();
             }
         });
-        VolleyRP.addToQueue(solicitud,mRequest,this,volleyRP);
+        VolleyRP.addToQueue(solicitud,mRequest,getContext(),volleyRP);
     }
 }
