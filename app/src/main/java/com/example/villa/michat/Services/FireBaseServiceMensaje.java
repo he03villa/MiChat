@@ -26,16 +26,27 @@ public class FireBaseServiceMensaje extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        String mensaje = remoteMessage.getData().get("mensaje");
-        String hora = remoteMessage.getData().get("hora");
-        String cabezera = remoteMessage.getData().get("cabezera");
-        String cuerpo = remoteMessage.getData().get("cuerpo");
-        String receptor = remoteMessage.getData().get("receptor");
-        String emisorPHP = remoteMessage.getData().get("emisor");
-        String emisor = Preferences.getString(this,Preferences.PREFERENCE_USUARIO);
-        if(emisor.equals(receptor)){
-            Mensaje(mensaje,hora,emisorPHP);
-            showNotificacion(cabezera,cuerpo);
+        String type = remoteMessage.getData().get("type");
+        switch (type){
+            case "mensaje":
+                String mensaje = remoteMessage.getData().get("mensaje");
+                String hora = remoteMessage.getData().get("hora");
+                String cabezera = remoteMessage.getData().get("cabezera");
+                String cuerpo = remoteMessage.getData().get("cuerpo");
+                String receptor = remoteMessage.getData().get("receptor");
+                String emisorPHP = remoteMessage.getData().get("emisor");
+                String emisor = Preferences.getString(this,Preferences.PREFERENCE_USUARIO);
+                if(emisor.equals(receptor)){
+                    Mensaje(mensaje,hora,emisorPHP);
+                    showNotificacion(cabezera,cuerpo);
+                }
+                break;
+            case "solicitud":
+                String usuario_envio = remoteMessage.getData().get("user_envio");
+                String cabezera_solicitud = remoteMessage.getData().get("cabezera");
+                String cuerpo_solicitud = remoteMessage.getData().get("cuerpo");
+                showNotificacion(cabezera_solicitud,cuerpo_solicitud);
+                break;
         }
     }
 
