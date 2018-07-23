@@ -70,7 +70,7 @@ public class Mensajeria extends AppCompatActivity{
         setContentView(R.layout.mensajeria);
         mensajeDeTextos = new ArrayList<>();
 
-        volleyRP = VolleyRP.getInstance(this);
+        volleyRP = volleyRP.getInstance(this);
         mRequest = volleyRP.getRequestQueue();
 
         EMISOR = Preferences.getString(this,Preferences.PREFERENCE_USUARIO);

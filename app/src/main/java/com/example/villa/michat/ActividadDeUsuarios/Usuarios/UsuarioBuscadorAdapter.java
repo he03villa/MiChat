@@ -31,7 +31,6 @@ public class UsuarioBuscadorAdapter extends RecyclerView.Adapter<HolderUsuarioBu
         holder.getFotoPerfil().setImageResource(atributoList.get(position).getFotoPerfil());
         holder.getNameUsuario().setText(atributoList.get(position).getNombre());
         holder.getEstadoUsuario().setText(atributoList.get(position).getEstado());
-
     }
 
     @Override

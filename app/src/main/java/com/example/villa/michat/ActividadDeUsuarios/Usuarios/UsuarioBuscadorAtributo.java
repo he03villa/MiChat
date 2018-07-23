@@ -4,6 +4,7 @@ public class UsuarioBuscadorAtributo {
     private int fotoPerfil;
     private String nombre;
     private String estado;
+    private String id;
 
     public int getFotoPerfil() {
         return fotoPerfil;
@@ -27,5 +28,13 @@ public class UsuarioBuscadorAtributo {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

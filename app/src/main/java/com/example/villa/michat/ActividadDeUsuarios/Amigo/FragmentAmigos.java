@@ -38,12 +38,12 @@ public class FragmentAmigos extends android.support.v4.app.Fragment{
     private RequestQueue mRequest;
     private VolleyRP volleyRP;
 
-    private static final String URL = "http://he03villa.000webhostapp.com/chat/Controlador/Amigos/Lista.php";
+    private static final String URL = "https://he03villa.000webhostapp.com/chat/Controlador/usuario/ListaUsuario.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_amigo,container,false);
-        volleyRP = VolleyRP.getInstance(getContext());
+        volleyRP = volleyRP.getInstance(getContext());
         mRequest = volleyRP.getRequestQueue();
 
         atributolista = new ArrayList<>();
@@ -77,18 +77,11 @@ public class FragmentAmigos extends android.support.v4.app.Fragment{
             public void onResponse(JSONObject response) {
                 try {
                     String datos = response.getString("resultado");
-                    String token = response.getString("token");
                     JSONArray array = new JSONArray(datos);
-                    JSONArray arrayToken = new JSONArray(token);
                     String nuestroUsuario = Preferences.getString(getContext(),Preferences.PREFERENCE_USUARIO);
                     for(int i = 0; i<array.length();i++){
-                        JSONObject object = array.getJSONObject(i);
-                        if(!nuestroUsuario.equals(object.getString("id"))){
-                            for (int k=0;k<arrayToken.length();k++){
-                                JSONObject objectToken = arrayToken.getJSONObject(k);
-                                if(object.getString("id").equals(objectToken.getString("id"))) agrgarAmigo(R.drawable.ic_account_circle,object.getString("nombre"),"mensaje "+i,"00:00",object.getString("id"));
-                            }
-                        }
+                        JSONObject js = array.getJSONObject(i);
+                        if(!js.getString("id").equals(nuestroUsuario)) agrgarAmigo(R.drawable.ic_account_circle,js.getString("nombre"),"mensaje "+i,"00:00",js.getString("id"));
                     }
                 } catch (JSONException e) {
                     Toast.makeText(getContext(),"Error en la descompresion del json",Toast.LENGTH_LONG).show();
