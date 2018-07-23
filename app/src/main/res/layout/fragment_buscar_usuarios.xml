@@ -16,7 +16,7 @@
         android:id="@+id/rvUsuarios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/card_view_buscar_usuarios_1">
+        tools:listitem="@layout/card_view_buscar_usuarios">
 
     </android.support.v7.widget.RecyclerView>
 
