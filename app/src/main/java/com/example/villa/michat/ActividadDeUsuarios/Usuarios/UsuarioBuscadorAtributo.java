@@ -1,10 +1,11 @@
 package com.example.villa.michat.ActividadDeUsuarios.Usuarios;
 
 public class UsuarioBuscadorAtributo {
+
+    private String id;
     private int fotoPerfil;
     private String nombre;
     private String estado;
-    private String id;
 
     public int getFotoPerfil() {
         return fotoPerfil;
