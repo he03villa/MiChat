@@ -20,10 +20,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.villa.michat.ActividadDeUsuarios.ClasesComunicacion.Prueba;
 import com.example.villa.michat.Preferences;
 import com.example.villa.michat.R;
 import com.example.villa.michat.VolleyRP;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +49,8 @@ public class FragmentUsuario extends Fragment{
     private VolleyRP volleyRP;
 
     private static final String URL = "https://he03villa.000webhostapp.com/chat/Controlador/usuario/ListaUsuario.php";
+
+    private EventBus bus = EventBus.getDefault();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class FragmentUsuario extends Fragment{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 buscador("" + s);
+                bus.post(new Prueba("" + s));
             }
 
             @Override
