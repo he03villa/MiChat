@@ -80,7 +80,6 @@ public class FragmentUsuario extends Fragment{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 buscador("" + s);
-                bus.post(new Prueba("" + s));
             }
 
             @Override
